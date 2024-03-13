@@ -49,9 +49,5 @@ public class LispReader {
     }
 
 
-    public static void main(String[] args) {
-        LispReader lisp = new LispReader();
-        ArrayList<String> tokens = lisp.LispFile("Farenheit.lsp");
-        System.out.println(tokens);
-    }
+    
 }

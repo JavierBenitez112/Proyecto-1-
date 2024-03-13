@@ -11,41 +11,46 @@ import java.util.HashMap;
 public class tokenizer {
 
     private HashMap<String, ArrayList<String>> tokenMap; 
-    private ArrayList<String> tokened;
+    private ArrayList<String> Keys;
 
     public void tokenizer() {
         tokenMap = new HashMap<String, ArrayList<String>>();
-        tokened = new ArrayList<String>();
+        Keys = new ArrayList<String>();
     }
     
     public void tokenize(ArrayList<String> tokens){
         int map = 0;
-
-        for (String token : tokens) {
-            if (token.equals(")")){
+        ArrayList<String> tokened = new ArrayList<String>();
+        for (int i = 0; i < tokens.size(); i++) {
+            ArrayList<String> stuff = new ArrayList<String>();
+            String key = "*h" + map;
+            if (tokens.get(i).equals(")")){
                 map++;
                 int r = tokened.size() - 1;
                 // return in the tokenMap till find "("
-                ArrayList<String> stuff = new ArrayList<String>();
-                while (r > 0) {
+                
+                
+                while (r >= 0) {
 
-                    if (tokened.get(r) == "(") {
+                    if (tokened.get(r).equals("(")){
                         tokened.remove(r);
+                        tokened.add(key);
                         break;
                     } else {
                         
-
-                        stuff.add(tokened.get(r));
+                        stuff.add(0, tokened.get(r));
                         tokened.remove(r);
+                        
                     }
-                    r--;
+                    r = r - 1;
                 }
-                String key = "*h" + map;
+                
                 tokenMap.put(key, stuff);
             } else{
-                tokened.add(token);
+                tokened.add(tokens.get(i));
             }
         }
+        Keys = tokened;
         
     }
 
@@ -54,9 +59,9 @@ public class tokenizer {
     }
 
     public ArrayList<String> getTokened() {
-        return tokened;
+        return Keys;
     }
 
-
+    
 }
     
