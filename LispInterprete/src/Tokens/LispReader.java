@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class LispReader {
     
     public ArrayList<String> LispFile(String path){
+        int s = 0;
         ArrayList<String> tokens = new ArrayList<String>();
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line;
@@ -20,17 +21,24 @@ public class LispReader {
                     if (tokenl.contains("(") || tokenl.contains(")")) {
                         String[] parenthesis = tokenl.split("");
                         for (String p : parenthesis) {
-                            if (p.equals("(") || p.equals(")")) {
+                            if (p.equals(")")) {
                                 
                                 // remove p from tokenl
                                 tokenl = tokenl.replace(p, "");
                                 tokens.add(p);
+                                s++;
+                            } else if (p.equals("(")) {
+                                tokenl = tokenl.replace(p, "");
+                                tokens.add(p);
+                                
                             }
                         }
                         
                         
                     }
-                    tokens.add(tokenl);
+                    
+                    tokens.add(tokens.size() - s,tokenl);
+                    s = 0;
                 }
                 
             }
