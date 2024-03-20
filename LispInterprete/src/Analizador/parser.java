@@ -3,67 +3,53 @@ package Analizador;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Parser {
-    
+public class parser {
     private HashMap<String, ArrayList<String>> tokenMap;
-    
-    public Parser(HashMap<String, ArrayList<String>> tokenMap) {
+    private ArrayList<String> keys;
+
+    public parser(HashMap<String, ArrayList<String>> tokenMap, ArrayList<String> keys) {
         this.tokenMap = tokenMap;
+        this.keys = keys;
     }
-    
-    public Node parse(ArrayList<String> tokens) {
-        return parseExpression(tokens, 0);
+
+    public Node parse() {
+        Node root = new Node("Programa"); // Nodo raíz representando el programa completo
+        buildAST(root, keys);
+        return root;
     }
-    
-    private Node parseExpression(ArrayList<String> tokens, int index) {
-        if (index >= tokens.size()) {
-            return null;
-        }
-        
-        String token = tokens.get(index);
-        
-        if (token.startsWith("*h")) {
-            Node node = new Node();
-            node.type = "Expression";
-            node.children = new ArrayList<>();
-            
-            // Obtener la lista de tokens asociada a la clave
-            ArrayList<String> childTokens = tokenMap.getOrDefault(token, new ArrayList<String>());
-            
-            // Convertir la lista de tokens a una cadena y asignarla como valor del nodo
-            node.value = childTokens.toString();
-            
-            // Parsear los hijos de la expresión
-            for (String childToken : childTokens) {
-                node.children.add(parseExpression(childTokens, 0)); // Llamada recursiva con los tokens dentro del ciclo
+
+    private void buildAST(Node parent, ArrayList<String> tokens) {
+        for (String token : tokens) {
+            if (tokenMap.containsKey(token)) {
+                Node child = new Node(token); // Crea un nuevo nodo con el nombre del token
+                parent.addChild(child); // Agrega el nodo como hijo del nodo padre
+
+                // Verifica si el token representa una función definida
+                if (token.equals("defun")) {
+                    // El siguiente token debe ser el nombre de la función
+                    String functionName = tokens.get(tokens.indexOf(token) + 1);
+                    Node functionNode = new Node("Function"); // Crea un nodo para representar la función
+                    functionNode.addChild(new Node(functionName)); // Agrega un nodo hijo para el nombre de la función
+                    ArrayList<String> functionBody = tokenMap.get(token); // Obtiene el cuerpo de la función
+                    // Construye el AST para el cuerpo de la función
+                    buildAST(functionNode, functionBody);
+                    child.addChild(functionNode); // Agrega el nodo de la función como hijo del nodo de la definición de función
+                } else if (token.equals("setq")) {
+                    // El siguiente token debe ser el nombre de la variable
+                    String variableName = tokens.get(tokens.indexOf(token) + 1);
+                    Node variableNode = new Node("Variable"); // Crea un nodo para representar la variable
+                    variableNode.addChild(new Node(variableName)); // Agrega un nodo hijo para el nombre de la variable
+                    // El siguiente token debe ser el valor de la variable
+                    String variableValue = tokens.get(tokens.indexOf(token) + 2);
+                    variableNode.addChild(new Node(variableValue)); // Agrega un nodo hijo para el valor de la variable
+                    child.addChild(variableNode); // Agrega el nodo de la variable como hijo del nodo de la definición de variable
+                } else {
+                    // Construye recursivamente el AST para el token actual
+                    buildAST(child, tokenMap.get(token));
+                }
+            } else {
+                parent.addChild(new Node(token)); // Agrega un nodo para el token como hijo del nodo padre
             }
-            
-            return node;
-        } else if (token.equals("(")) {
-            Node node = new Node();
-            node.type = "Expression";
-            node.children = new ArrayList<>();
-            
-            // Parsear los hijos de la expresión
-            index++;
-            while (!tokens.get(index).equals(")")) {
-                node.children.add(parseExpression(tokens, index));
-                index++;
-            }
-            
-            return node;
-        } else {
-            // Si es un número o un operador
-            Node node = new Node();
-            node.type = token;
-            node.value = tokenMap.getOrDefault(token, new ArrayList<String>()).toString(); // Convertir la lista de tokens a una cadena
-            return node;
         }
-    }
-    
-    public static class Node {
-        public String type;
-        public String value;
-        public ArrayList<Node> children;
     }
 }

@@ -1,26 +1,33 @@
 package Evaluador;
-import Analizador.Parser;
+import Analizador.Node;
 
 
 public class Evaluador {
-    
-    public int evaluate(Parser.Node root) {
+
+    public int evaluate(Node root) {
         if (root == null) {
             return 0;
         }
-        if (root.type.equals("Expression")) {
+        if (root.getValue().equals("Expression")) {
             // Evaluar los hijos recursivamente
-            int result = evaluate(root.children.get(0));
-            for (int i = 1; i < root.children.size(); i += 2) {
-                String operator = root.children.get(i).value;
-                int operand = evaluate(root.children.get(i + 1));
+            int result = evaluate(root.getChildren().get(0));
+            for (int i = 1; i < root.getChildren().size(); i += 2) {
+                String operator = root.getChildren().get(i).getValue();
+                int operand = evaluate(root.getChildren().get(i + 1));
                 result = applyOperator(result, operator, operand);
             }
             return result;
         } else {
-            return Integer.parseInt(root.value);
+            // Verificar si el valor del nodo es un número
+            try {
+                return Integer.parseInt(root.getValue());
+            } catch (NumberFormatException e) {
+                // Manejar el caso en que el valor no sea un número
+                throw new IllegalArgumentException("El valor del nodo no es un número válido: " + root.getValue());
+            }
         }
     }
+
     private int applyOperator(int leftOperand, String operator, int rightOperand) {
         switch (operator) {
             case "+":
