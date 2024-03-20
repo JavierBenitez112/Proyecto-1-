@@ -11,11 +11,11 @@ import java.util.HashMap;
 public class tokenizer {
 
     private HashMap<String, ArrayList<String>> tokenMap; 
-    private ArrayList<String> Keys;
+    private ArrayList<ArrayList<String>> Keys;
 
     public void tokenizer() {
         tokenMap = new HashMap<String, ArrayList<String>>();
-        Keys = new ArrayList<String>();
+        Keys = new ArrayList<ArrayList<String>>();
     }
     
     public void tokenize(ArrayList<String> tokens){
@@ -50,7 +50,12 @@ public class tokenizer {
                 tokened.add(tokens.get(i));
             }
         }
-        Keys = tokened;
+
+        for (int i = 0; i < tokened.size(); i++){
+            Keys.add(tokenMap.get(tokened.get(i)));
+        }
+        
+    
         
     }
 
@@ -58,7 +63,7 @@ public class tokenizer {
         return tokenMap;
     }
 
-    public ArrayList<String> getTokened() {
+    public ArrayList<ArrayList<String>> getTokened() {
         return Keys;
     }
 
