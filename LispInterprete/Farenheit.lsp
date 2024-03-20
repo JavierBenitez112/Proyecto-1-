@@ -1,6 +1,7 @@
-
 (defun farenheit-to-celsius (f)
-  (let ((c (* (- f 32) 5/9))) 
-    c))
+  (* (/ (- f 32) 9) 5))
+
+
+  
 
 (format t "La temperatura en celsius es: ~A" (farenheit-to-celsius 32))

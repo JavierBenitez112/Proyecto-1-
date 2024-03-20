@@ -19,7 +19,7 @@ public class ParserTest {
     public void testFarenheitToCelsius() {
         // Paso 1: Parseo del código Lisp
         LispReader lispReader = new LispReader();
-        ArrayList<String> tokens = lispReader.LispFile("Farenheit.lsp");
+        ArrayList<String> tokens = lispReader.LispFile("Factorial.lsp");
 
         HashMap<String, ArrayList<String>> tokenMap = new HashMap<>();
         tokenMap.put("root", tokens);

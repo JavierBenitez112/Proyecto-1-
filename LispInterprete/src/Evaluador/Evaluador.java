@@ -1,7 +1,6 @@
 package Evaluador;
 import Analizador.Node;
 
-
 public class Evaluador {
 
     public int evaluate(Node root) {
