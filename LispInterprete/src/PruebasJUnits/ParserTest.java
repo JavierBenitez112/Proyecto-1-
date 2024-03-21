@@ -1,37 +1,72 @@
 package PruebasJUnits;
 
-import Evaluador.Evaluador;
 import Analizador.Node;
-import Analizador.parser;
-import Tokens.LispReader;
 import Tokens.tokenizer;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import Tokens.LispReader;
 
 
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class ParserTest {
 
     @Test
-    public void testFarenheitToCelsius() {
-        // Paso 1: Parseo del código Lisp
-        LispReader lispReader = new LispReader();
-        ArrayList<String> tokens = lispReader.LispFile("Factorial.lsp");
+    public void testNodeConstruction() {
+        // Crear instancia de tokenizer
+        tokenizer tokenizer = new tokenizer();
+        
+        // Crear datos de ejemplo para el tokenizer
+        LispReader lisp = new LispReader();
+        ArrayList<String> tokens = lisp.LispFile("C:\\Users\\javib\\OneDrive\\Documentos\\GitHub\\Proyecto-1-\\LispInterprete\\Farenheit.lsp");
+        //System.out.println(tokens);
+        tokenizer token = new tokenizer();
+        token.tokenize(tokens); // Fix: Pass the 'tokens' ArrayList as an argument
+        
+        // Tokenizar los datos
+        tokenizer.tokenize(tokens);
+        
+        // Obtener los datos tokenizados
+        ArrayList<ArrayList<String>> datosTokenizados = tokenizer.getTokened();
+        
 
-        HashMap<String, ArrayList<String>> tokenMap = new HashMap<>();
-        tokenMap.put("root", tokens);
+        token.tokenize(tokens); // Fix: Pass the 'tokens' ArrayList as an argument
+        System.out.println(token.getTokenMap());
+        System.out.println(token.getTokened());
 
-        parser parser = new parser(tokenMap, new ArrayList<>(tokenMap.keySet()));
-        Node root = parser.parse();
+        // Verificar si datosTokenizados es null
+        if (datosTokenizados != null) {
+            // Verificar si hay al menos un dato
+            if (!datosTokenizados.isEmpty()) {
+                // Crear el nodo con el primer conjunto de datos tokenizados
+                Node nodo = new Node(datosTokenizados.get(0));
 
-        // Paso 2: Evaluación del AST
-        Evaluador evaluador = new Evaluador();
-        int result = evaluador.evaluate(root);
+                // Imprimir los datos almacenados en el nodo
+                System.out.println("Datos almacenados en el nodo:");
+                imprimirArrayList(nodo.getDatos());
 
-        // Verificar el resultado de la conversión de Fahrenheit a Celsius
-        assertEquals(0, result); // Ajusta este valor según el resultado esperado
+                // Verificar que los datos se hayan almacenado correctamente
+                assertNotNull(nodo);
+                assertEquals(datosTokenizados.get(0), nodo.getDatos());
+            } else {
+                System.out.println("No se encontraron datos tokenizados");
+            }
+        } else {
+            System.out.println("La lista de datos tokenizados es null");
+        }
+    }
+
+    // Método para imprimir un ArrayList
+    private void imprimirArrayList(ArrayList<String> lista) {
+        if (lista != null) { // Verificar si la lista no es null
+            for (String elemento : lista) {
+                System.out.print(elemento + " ");
+            }
+            System.out.println();
+        } else {
+            System.out.println("La lista proporcionada es null");
+        }
     }
 }

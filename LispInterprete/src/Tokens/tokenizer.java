@@ -13,7 +13,7 @@ public class tokenizer {
     private HashMap<String, ArrayList<String>> tokenMap; 
     private ArrayList<ArrayList<String>> Keys;
 
-    public void tokenizer() {
+    public tokenizer() {
         tokenMap = new HashMap<String, ArrayList<String>>();
         Keys = new ArrayList<ArrayList<String>>();
     }

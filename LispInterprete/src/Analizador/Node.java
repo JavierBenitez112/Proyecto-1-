@@ -1,26 +1,51 @@
 package Analizador;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Node {
-    private String value;
-    private List<Node> children;
+    private ArrayList<String> datos;
+    private Node hijoIzquierdo;
+    private Node hijoDerecho;
 
-    public Node(String value) {
-        this.value = value;
-        this.children = new ArrayList<>();
+    // Constructor
+    public Node(ArrayList<String> datos) {
+        this.datos = datos;
+        this.hijoIzquierdo = null;
+        this.hijoDerecho = null;
     }
 
-    public String getValue() {
-        return value;
+    // Método para agregar un hijo izquierdo
+    public void agregarHijoIzquierdo(Node nodo) {
+        this.hijoIzquierdo = nodo;
     }
 
-    public List<Node> getChildren() {
-        return children;
+    // Método para agregar un hijo derecho
+    public void agregarHijoDerecho(Node nodo) {
+        this.hijoDerecho = nodo;
     }
 
-    public void addChild(Node child) {
-        children.add(child);
+    // Getters y Setters
+    public ArrayList<String> getDatos() {
+        return datos;
+    }
+
+    public void setDatos(ArrayList<String> datos) {
+        this.datos = datos;
+    }
+
+    public Node getHijoIzquierdo() {
+        return hijoIzquierdo;
+    }
+
+    public void setHijoIzquierdo(Node hijoIzquierdo) {
+        this.hijoIzquierdo = hijoIzquierdo;
+    }
+
+    public Node getHijoDerecho() {
+        return hijoDerecho;
+    }
+
+    public void setHijoDerecho(Node hijoDerecho) {
+        this.hijoDerecho = hijoDerecho;
     }
 }
