@@ -1,7 +1,6 @@
 //clase tokenizadora de expresiones lisp
 package Tokens;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 //import hash map
 import java.util.HashMap;

@@ -24,6 +24,37 @@ public class Node {
         this.hijoDerecho = nodo;
     }
 
+    // Método para imprimir el árbol de manera recursiva
+    public void imprimirArbol(int nivel) {
+        // Imprimir datos del nodo con indentación según el nivel
+        for (int i = 0; i < nivel; i++) {
+            System.out.print("  ");
+        }
+        imprimirArrayList(this.datos);
+
+        // Imprimir hijo izquierdo recursivamente
+        if (this.hijoIzquierdo != null) {
+            this.hijoIzquierdo.imprimirArbol(nivel + 1);
+        }
+
+        // Imprimir hijo derecho recursivamente
+        if (this.hijoDerecho != null) {
+            this.hijoDerecho.imprimirArbol(nivel + 1);
+        }
+    }
+
+    // Método para imprimir un ArrayList
+    private void imprimirArrayList(ArrayList<String> lista) {
+        if (lista != null) {
+            for (String elemento : lista) {
+                System.out.print(elemento + " ");
+            }
+            System.out.println();
+        } else {
+            System.out.println("La lista proporcionada es null");
+        }
+    }
+
     // Getters y Setters
     public ArrayList<String> getDatos() {
         return datos;

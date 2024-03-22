@@ -16,7 +16,6 @@ public class LispReader {
                 String[] lineTokens = line.split(" ");
                 for (String tokenl : lineTokens) {
                     if (tokenl.equals("")) continue;
-                    // TODO: dejar que pedro haga comandos
                     // add parenthesis to the tokens as separate tokens
                     if (tokenl.contains("(") || tokenl.contains(")")) {
                         String[] parenthesis = tokenl.split("");

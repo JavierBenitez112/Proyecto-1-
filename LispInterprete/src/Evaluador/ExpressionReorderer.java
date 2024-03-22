@@ -1,34 +1,10 @@
+package Evaluador;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import Tokens.LispReader;
-import Tokens.tokenizer;
-
-public class App {
-    public static void main(String[] args) throws Exception {
-        LispReader lisp = new LispReader();
-        ArrayList<String> tokens = lisp.LispFile("C:\\Users\\javib\\OneDrive\\Documentos\\GitHub\\Proyecto-1-\\LispInterprete\\Farenheit.lsp");
-
-        tokenizer token = new tokenizer();
-        token.tokenize(tokens);
-
-        // Obtener los datos tokenizados
-        ArrayList<ArrayList<String>> datosTokenizados = token.getTokened();
-
-        // Obtener el mapa de tokens
-        HashMap<String, ArrayList<String>> tokenMap = token.getTokenMap();
-
-        // Reordenar la expresión
-        ArrayList<String> expression = datosTokenizados.get(0); // Se asume que solo hay una expresión
-        ArrayList<String> reorderedExpression = reorderExpression(expression, tokenMap);
-
-        // Imprimir la expresión reordenada
-        System.out.println("Expresión reordenada:");
-        System.out.println(reorderedExpression);
-    }
-
-    // Método para reordenar la expresión
-    private static ArrayList<String> reorderExpression(ArrayList<String> expression, HashMap<String, ArrayList<String>> tokenMap) {
+public class ExpressionReorderer {
+    public static ArrayList<String> reorderExpression(ArrayList<String> expression, HashMap<String, ArrayList<String>> tokenMap) {
         ArrayList<String> reorderedExpression = new ArrayList<>();
 
         for (String token : expression) {
