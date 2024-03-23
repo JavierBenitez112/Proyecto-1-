@@ -1,7 +1,9 @@
-(defun factorial (n)
-  (loop for i from 1 to n
-        for result = 1 then (* result i)
-        finally (return result)))
+(defun Factorial (n)
+  (cond
+    ((equal n 0) 1)
+    ((> n 0) (* n (Factorial (- n 1))))
+    ))
 
-(format t "El factorial del numero n es: ~a~%" (factorial 5))
+
+(format t "El factorial del numero n es: ~a~%" (Factorial 5))
 

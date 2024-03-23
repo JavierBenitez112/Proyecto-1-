@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class LispReader {
+
+    // Leer un archivo lisp y devolver un arraylist con los tokens
     
     public ArrayList<String> LispFile(String path){
         int s = 0;
@@ -16,14 +18,14 @@ public class LispReader {
                 String[] lineTokens = line.split(" ");
                 for (String tokenl : lineTokens) {
                     if (tokenl.equals("")) continue;
-                    // TODO: dejar que pedro haga comandos
-                    // add parenthesis to the tokens as separate tokens
+                    
+                    // anadir los parentesis a la lista de tokens
                     if (tokenl.contains("(") || tokenl.contains(")")) {
                         String[] parenthesis = tokenl.split("");
                         for (String p : parenthesis) {
                             if (p.equals(")")) {
                                 
-                                // remove p from tokenl
+                                // remover valor p de tokenl
                                 tokenl = tokenl.replace(p, "");
                                 tokens.add(p);
                                 s++;

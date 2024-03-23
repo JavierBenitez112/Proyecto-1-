@@ -2,6 +2,7 @@ package Analizador;
 
 public class AST {
 
+    // Arbol donde se almacenara las instrucciones de lisp
     private Node raiz;
         // Constructor
         public AST(Node raiz) {

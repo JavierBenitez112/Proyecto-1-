@@ -1,9 +1,8 @@
 (defun fibonacci (n)
-  (let* ((sqrt5 (sqrt 5))
-         (phi (/ (+ 1 sqrt5) 2))
-         (psi (/ (- 1 sqrt5) 2))
-         (fib-numerator (- (expt phi n) (expt psi n))))
-    (/ fib-numerator sqrt5)))
+  (cond
+    ((equal n 0) 0)
+    ((equal n 1) 1)
+    ((> n 1) (+ (fibonacci (- n 1)) (fibonacci (- n 2))))))
 
 
 (format t "El término 10 de la secuencia de Fibonacci es: ~a~%" (fibonacci 10))

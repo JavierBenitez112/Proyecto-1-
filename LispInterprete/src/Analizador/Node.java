@@ -2,6 +2,7 @@ package Analizador;
 
 import java.util.ArrayList;
 
+// Clase para representar un nodo del árbol
 public class Node {
     private ArrayList<String> datos;
     private Node hijoIzquierdo;
