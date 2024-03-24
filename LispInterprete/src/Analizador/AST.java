@@ -1,25 +1,22 @@
 package Analizador;
 
-public class AST {
+public class AST<T> {
+    private Node<T> raiz;
 
-    private Node raiz;
-        // Constructor
-        public AST(Node raiz) {
-            this.raiz = raiz;
-        }
+    public AST(T data) {
+        this.raiz = new Node<T>(data);
+    }
+
+    public void addHijo(AST<T> data){
+        raiz.children.add(data.getRaiz());
+    }
+
+    public Node<T> getHijo(int index) {
+        return raiz.children.get(index);
+    }
     
-        // Método privado para recorrer inorden recursivamente
-        private void recorridoInorden(Node nodo) {
-            if (nodo != null) {
-                recorridoInorden(nodo.getHijoIzquierdo());
-                System.out.print(nodo.getDatos() + " ");
-                recorridoInorden(nodo.getHijoDerecho());
-            }
-        }
-    
-        // Método público para iniciar el recorrido inorden
-        public void recorridoInorden() {
-            recorridoInorden(raiz);
-        }
+    public Node<T> getRaiz() {
+        return raiz;
+    }
     
 }

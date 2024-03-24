@@ -18,7 +18,7 @@ public class ParserTest {
         
         // Crear datos de ejemplo para el tokenizer
         LispReader lisp = new LispReader();
-        ArrayList<String> tokens = lisp.LispFile("C:\\Users\\javib\\OneDrive\\Documentos\\GitHub\\Proyecto-1-\\LispInterprete\\Farenheit.lsp");
+        ArrayList<String> tokens = lisp.LispFile("C:\\Users\\javib\\OneDrive\\Documentos\\GitHub\\Proyecto-1-\\LispInterprete\\src\\Lisp pruebas\\Prueba1.txt");
         
         // Tokenizar los datos
         tokenizer.tokenize(tokens);
@@ -85,10 +85,7 @@ public class ParserTest {
         ArrayList<String> datos = tokenizer.getTokened().get(index);
         Node nodo = new Node(datos);
     
-        // Explorar hijos izquierdos y derechos recursivamente
-        nodo.setHijoIzquierdo(crearArbol(tokenizer, 2 * index + 1));
-        nodo.setHijoDerecho(crearArbol(tokenizer, 2 * index + 2));
-    
+        
         return nodo;
     }
 }

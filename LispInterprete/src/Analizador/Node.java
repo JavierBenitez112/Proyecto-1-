@@ -2,81 +2,31 @@ package Analizador;
 
 import java.util.ArrayList;
 
-public class Node {
-    private ArrayList<String> datos;
-    private Node hijoIzquierdo;
-    private Node hijoDerecho;
+public class Node<T> {
+    private T data;
+    public ArrayList<Node<T>> children;
+    public Node<String> parent;
 
-    // Constructor
-    public Node(ArrayList<String> datos) {
-        this.datos = datos;
-        this.hijoIzquierdo = null;
-        this.hijoDerecho = null;
+    public Node(T data) {
+        this.data = data;
+        children = new ArrayList<Node<T>>();
     }
 
-    // Método para agregar un hijo izquierdo
-    public void agregarHijoIzquierdo(Node nodo) {
-        this.hijoIzquierdo = nodo;
+    public T getData() {
+        return data;
     }
 
-    // Método para agregar un hijo derecho
-    public void agregarHijoDerecho(Node nodo) {
-        this.hijoDerecho = nodo;
-    }
-
-    // Método para imprimir el árbol de manera recursiva
-    public void imprimirArbol(int nivel) {
-        // Imprimir datos del nodo con indentación según el nivel
-        for (int i = 0; i < nivel; i++) {
-            System.out.print("  ");
+    @Override
+    public String toString() {
+        String nodeString = "Node<" + data.toString() + ">: ";
+        for (Node<T> child : children) {
+            nodeString += child.toString();
         }
-        imprimirArrayList(this.datos);
-
-        // Imprimir hijo izquierdo recursivamente
-        if (this.hijoIzquierdo != null) {
-            this.hijoIzquierdo.imprimirArbol(nivel + 1);
-        }
-
-        // Imprimir hijo derecho recursivamente
-        if (this.hijoDerecho != null) {
-            this.hijoDerecho.imprimirArbol(nivel + 1);
-        }
+        return nodeString;
     }
 
-    // Método para imprimir un ArrayList
-    private void imprimirArrayList(ArrayList<String> lista) {
-        if (lista != null) {
-            for (String elemento : lista) {
-                System.out.print(elemento + " ");
-            }
-            System.out.println();
-        } else {
-            System.out.println("La lista proporcionada es null");
-        }
-    }
-
-    // Getters y Setters
-    public ArrayList<String> getDatos() {
-        return datos;
-    }
-
-    public void setDatos(ArrayList<String> datos) {
-        this.datos = datos;
-    }
-
-    public Node getHijoIzquierdo() {
-        return hijoIzquierdo;
-    }
-
-    public void setHijoIzquierdo(Node hijoIzquierdo) {
-        this.hijoIzquierdo = hijoIzquierdo;
-    }
-
-    public Node getHijoDerecho() {
-        return hijoDerecho;
-    }
-
-    public void setHijoDerecho(Node hijoDerecho) {
-        this.hijoDerecho = hijoDerecho;
+    public Node<ArrayList<ArrayList<String>>>[] getHijo() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getHijo'");
     }
 }
