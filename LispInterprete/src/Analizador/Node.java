@@ -1,32 +1,32 @@
 package Analizador;
 
 import java.util.ArrayList;
+import java.util.List;
+
+//Como se planteo, todos los elementos van a ser nodos que tengan hijos
 
 public class Node<T> {
     private T data;
-    public ArrayList<Node<T>> children;
-    public Node<String> parent;
+    private List<Node<T>> children;
 
     public Node(T data) {
         this.data = data;
-        children = new ArrayList<Node<T>>();
+        this.children = new ArrayList<>();
     }
 
     public T getData() {
         return data;
     }
 
-    @Override
-    public String toString() {
-        String nodeString = "Node<" + data.toString() + ">: ";
-        for (Node<T> child : children) {
-            nodeString += child.toString();
-        }
-        return nodeString;
+    public List<Node<T>> getHijos() {
+        return children;
     }
 
-    public Node<ArrayList<ArrayList<String>>>[] getHijo() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getHijo'");
+    public void addHijo(Node<T> child) {
+        children.add(child);
+    }
+
+    public Node<T> getHijo(int index) {
+        return children.get(index);
     }
 }
