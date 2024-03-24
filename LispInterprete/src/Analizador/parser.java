@@ -1,41 +1,45 @@
 package Analizador;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import Tokens.tokenizer;
 
 public class parser {
-    private tokenizer tokenizer;
+    ArrayList<ArrayList<String>> arrayList;
+    tokenizer token;
+    ArrayList<String> tokens;
+    public AST<ArrayList<String>> arbol;
 
-    public parser(tokenizer tokenizer) {
-        this.tokenizer = tokenizer;
-    }
+    // Método para analizar y crear el árbol
+    public void parse() {
+        this.token = new tokenizer(); // Inicializar correctamente el tokenizer
+        this.token.tokenize(tokens);
+        ArrayList<ArrayList<String>> Lista = this.token.getTokened(); // Usar this.token
+        HashMap<String, ArrayList<String>> tokenMap = this.token.getTokenMap(); // Usar this.token
 
-    public AST parse() {
-        Node raiz = null;
-        for (ArrayList<String> dato : tokenizer.getTokened()) {
-            if (dato.contains("defun")) {
-                int index = dato.indexOf("defun");
-                if (index < dato.size() - 1) {
-                    String key = dato.get(index + 1);
-                    ArrayList<String> operacion = tokenizer.getTokenMap().get(key);
-                    if (operacion != null) {
-                        Node nodoDefun = new Node(dato);
-                        Node nodoOperacion = new Node(operacion);
-                        nodoDefun.agregarHijoDerecho(nodoOperacion);
-                        if (raiz == null) {
-                            raiz = nodoDefun;
-                        } else {
-                            // Aquí puedes decidir cómo agregar el nodoDefun al árbol, por ejemplo, como hijo izquierdo de la raíz
-                            Node temp = raiz;
-                            while (temp.getHijoIzquierdo() != null) {
-                                temp = temp.getHijoIzquierdo();
-                            }
-                            temp.agregarHijoIzquierdo(nodoDefun);
-                        }
-                    }
-                }
-            }
+        // Obtener la primera lista anidada
+        ArrayList<String> primeraListaAnidada = Lista.get(0);
+
+        // Verificar si la primera lista es una definición de función "defun"
+        if (primeraListaAnidada.get(0).equals("defun")) {
+            // Crear el árbol con la primera lista anidada como raíz
+            arbol = createTree(primeraListaAnidada, tokenMap);
+            System.out.println(arbol);
+        } else {
+            // Manejar otros tipos de expresiones o errores
+            System.out.println("Error: La expresión no comienza con 'defun'");
         }
-        return new AST(raiz);
     }
+
+    // Método recursivo para crear el árbol
+    private AST<ArrayList<String>> createTree(ArrayList<String> listaAnidada, HashMap<String, ArrayList<String>> tokenMap) {
+        
+
+        return arbol;
+    }
+
+// Método recursivo para imprimir el árbol
+    
+    
 }
