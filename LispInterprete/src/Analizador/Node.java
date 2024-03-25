@@ -29,4 +29,10 @@ public class Node<T> {
     public Node<T> getHijo(int index) {
         return children.get(index);
     }
+
+    public void changedata(T data) {
+        this.data = data;
+    }
+
+
 }
