@@ -4,13 +4,13 @@ import Analizador.AST;
 import Analizador.Node;
 import java.util.ArrayList;
 
-
+/**
+ * Clase que proporciona métodos para evaluar y manipular árboles AST.
+ */
 public class Evaluador {
 
-    //Evaluador Aritmetico para defun pero aplicable para todo
-
-    //Va a recibir un arbol que tenga una key y expresiones anidadas
-
+    // Evaluador Aritmetico para defun pero aplicable para todo
+    // Va a recibir un arbol que tenga una key y expresiones anidadas
     /*
      *                  -
      *                /   \
@@ -19,6 +19,12 @@ public class Evaluador {
      *          2  3    4    5
      */
     
+    /**
+     * Evalúa un árbol AST aritmético.
+     *
+     * @param ast El árbol AST a evaluar.
+     * @return El resultado de la evaluación como una cadena.
+     */
     public String evaluate(AST<String> ast) {
         return CalculadoraInfix(ast.getRaiz());
     }
@@ -52,7 +58,6 @@ public class Evaluador {
     }
 
     // SETQ, a la hora de encontrar un setq se recibe el arbol y se reemplaza el valor de la variable
-
     /*
      *          SETQ
      *           |
@@ -61,6 +66,12 @@ public class Evaluador {
      *          Valor
      */
 
+    /**
+     * Realiza la operación SETQ para asignar un valor a una variable en el árbol AST.
+     *
+     * @param ast El árbol AST en el que se realizará la operación SETQ.
+     * @return El árbol AST con la variable actualizada.
+     */
     public AST<String> setq(AST<String> ast) {
         return findnreplace(ast.getRaiz(), ast);
     }
@@ -93,8 +104,12 @@ public class Evaluador {
         
     }
 
-
-
+    /**
+     * Evalúa la operación COND en el árbol AST.
+     *
+     * @param ast El árbol AST en el que se realizará la operación COND.
+     * @return El resultado de la evaluación de COND como una cadena.
+     */
     public String cond(AST<String> ast) {
         return findcond(ast.getRaiz(), ast);
     }
@@ -145,11 +160,5 @@ public class Evaluador {
         }
         return result;
     }
-
-    
-
-    
-    
-    
 
 }
