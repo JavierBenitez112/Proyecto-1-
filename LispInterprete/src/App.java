@@ -4,8 +4,9 @@ import java.util.Scanner;
 
 import Tokens.LispReader;
 import Tokens.tokenizer;
-
+import Analizador.AST;
 import Analizador.parser;
+import Evaluador.Evaluador;
 
 public class App {
 
@@ -31,9 +32,15 @@ public class App {
 
         //Prueba parser
         parser p = new parser(token.getTokenMap());
-        p.parse(tokens);
+        p.parse(token.getTokened());
 
         p.printCurrentAST();
+
+        Evaluador e = new Evaluador();
+        
+        for (AST<String> ast : p.getLogicalOrder()) {
+            System.out.println(e.setq(ast));
+        }
     }
 
 
