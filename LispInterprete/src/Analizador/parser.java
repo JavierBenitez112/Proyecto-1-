@@ -18,19 +18,22 @@ public class parser {
     }
 
     // Método para analizar y crear el árbol
-    public void parse(ArrayList<String> currentList){
+    public void parse(ArrayList<ArrayList<String>> currentList){
         if (currentList.isEmpty()) {
             return; // Si la lista está vacía, no se realiza ningún análisis
         }
 
-        String firstToken = currentList.get(0);
+        for (int i = 0; i < currentList.size(); i++) {
+            String firstToken = currentList.get(i).get(0);
         if ("defun".equals(firstToken)) {
-            functions.put(currentList.get(currentList.size() - 1), CrearAST(currentList));
+            functions.put(currentList.get(i).get(currentList.get(i).size() - 1), CrearAST(currentList.get(i)));
         } else if ("setq".equals(firstToken) || "cond".equals(firstToken)) {
-            logicalOrder.add(CrearAST(currentList));
+            logicalOrder.add(CrearAST(currentList.get(i)));
         } else {
-            logicalOrder.add(CrearAST(currentList));
+            logicalOrder.add(CrearAST(currentList.get(i)));
         }
+        }
+        
     }
     
     // Método para generar el árbol AST
@@ -141,5 +144,9 @@ private void printAST(Node<String> node, int depth) {
             Node<String> root = currentAST.getRaiz();
             printAST(root, 0); // Comenzar la impresión desde la raíz con profundidad 0
         }
+    }
+
+    public AST<String> getAST(String functionName) {
+        return functions.get(functionName);
     }
 }
