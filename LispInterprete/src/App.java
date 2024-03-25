@@ -5,6 +5,7 @@ import Evaluador.Evaluador;
 import Tokens.LispReader;
 import Tokens.tokenizer;
 import Analizador.Node;
+import Analizador.parser;
 
 public class App {
 
@@ -41,7 +42,14 @@ public class App {
                 Evaluador evaluator = new Evaluador();
                 String resultado = evaluator.evaluate(tree);
                 System.out.println("El resultado de la expresión es: " + resultado);
+
+                //Prueba parser
+                parser p = new parser(token.getTokenMap());
+                p.parse(tokens);
+
+                p.printCurrentAST();
     }
+
 
     
 }
