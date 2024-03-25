@@ -61,11 +61,11 @@ public class Evaluador {
      *          Valor
      */
 
-    public String  setq(AST<String> ast) {
+    public AST<String> setq(AST<String> ast) {
         return findnreplace(ast.getRaiz(), ast);
     }
 
-    private String findnreplace(Node<String> node, AST<String> ast) {
+    private AST<String> findnreplace(Node<String> node, AST<String> ast) {
         String variable = "";
         String valor = "";
 
@@ -89,11 +89,62 @@ public class Evaluador {
                 findnreplace(node.getHijo(j), ast);
             }
         }
-        return ast.getRaiz().getHijo(0).getData();
+        return ast;
         
     }
 
-    
+
+
+    public String cond(AST<String> ast) {
+        return findcond(ast.getRaiz(), ast);
+    }
+
+    private String findcond(Node<String> node, AST<String> ast) {
+        String result = "";
+        for (int i = 0; i < node.getHijos().size(); i++) {
+            if (node.getHijo(i).getData().toLowerCase().equals("cond")) {
+                String opcion = node.getHijo(i).getHijo(0).getData();
+                int valor1 = Integer.parseInt(node.getHijo(i).getHijo(0).getHijo(0).getData());
+                int valor2 = Integer.parseInt(node.getHijo(i).getHijo(0).getHijo(1).getData());
+                switch (opcion) {
+                    case ">":
+                        if (valor1 > valor2) {
+                            result = node.getHijo(i).getHijo(0).getHijo(2).getData();
+                        } else {
+                            if (node.getHijo(i).getHijo(0).getHijos().size() > 3) {
+                                result = node.getHijo(i).getHijo(0).getHijo(3).getData();
+                            } else {
+                                result = "False";
+                            }
+                        }
+                        break;
+                    case "<":
+                        if (valor1 < valor2) {
+                            result = node.getHijo(i).getHijo(0).getHijo(2).getData();
+                        } else {
+                            if (node.getHijo(i).getHijo(0).getHijos().size() > 3) {
+                                result = node.getHijo(i).getHijo(0).getHijo(3).getData();
+                            } else {
+                                result = "False";
+                            }
+                        }
+                        break;
+                    default:
+                        if (valor1 == valor2) {
+                            result = node.getHijo(i).getHijo(0).getHijo(2).getData();
+                        } else {
+                            if (node.getHijo(i).getHijo(0).getHijos().size() > 3) {
+                                result = node.getHijo(i).getHijo(0).getHijo(3).getData();
+                            } else {
+                                result = "False";
+                            }
+                        }
+                        break;
+                }
+            }
+        }
+        return result;
+    }
 
     
 
